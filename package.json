@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "dev": "set NODE_ENV=development&&nodemon server.js",
-    "prod": "set NODE_ENV=production&&nodemon server.js",
+    "dev": "export NODE_ENV=development&&nodemon server.js",
     "seeder": "node utils/seeder.js"
   },
   "dependencies": {
