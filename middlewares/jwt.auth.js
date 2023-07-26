@@ -30,7 +30,7 @@ function getTokenFromHeaders(req) {
 
 module.exports = {
   isAuthenticated,
-
+};
 
 
 
