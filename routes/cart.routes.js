@@ -14,7 +14,7 @@ router.put('/:userId/shippinginfo', async (req,res) => {
   try {
    
     const updateOrder = await Order.updateOne({buyer:user.userId}, {shippingInfo}, {new:true})
-    
+    const deleteCartInUser = await User.updateOne({_id:user.userId},{shoppingCart:null},{new:true})
     res.status(201).json({ message: "Order created successfully" });
   } catch (error) { console.log("error while upating model",error )
     
@@ -71,26 +71,15 @@ router.put('/:userId/cart/:productId/:amount', async (req, res) => {
     const product = await Product.findById(productId);
     if (!product) {
       return res.send('Product not found');
-    }
-
-    // const isProductInCart = user.cart.includes(productId);
-    // if (isProductInCart) {
-    //   return res.send('Product already in cart');
-    // }
-    //const productAndAmount = product.push({amountOfItems:amount})
-   
-    
+    }   
     user.shoppingCart = user.shoppingCart || [];
         const isInCart = user.shoppingCart.includes(productId);
         if (user.shoppingCart && isInCart) {
           return res.send("Product already in favourites");
         }
-
     user.shoppingCart.push(req.body);
     await user.save();
-
-    
-  console.log(`Product added to cart: ${product}`);
+    console.log(`Product added to cart: ${product}`);
 
     res.send('Product added to cart');
   } catch (error) {
